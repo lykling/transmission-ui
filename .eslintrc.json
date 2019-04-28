@@ -1,3 +1,7 @@
 {
-    "extends": "@ecomfe/eslint-config"
+    "extends": [
+        "@ecomfe/eslint-config",
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ]
 }
