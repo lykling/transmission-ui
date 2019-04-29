@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build:agent": "babel --out-dir build/agent agent",
+    "build:lib": "babel --out-dir build/lib lib",
+    "build:sense": "webpack --config webpack.config.js --progress",
+    "watch:sense": "webpack --config webpack.config.js --progress --watch",
     "test": "mocha"
   },
   "repository": {
@@ -23,15 +26,23 @@
   "dependencies": {
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
     "@opuscapita/filemanager-server": "^1.1.0-beta.6",
     "@opuscapita/react-filemanager": "^1.1.0-beta.6",
     "@opuscapita/react-filemanager-connector-node-v1": "^1.1.0-beta.6",
     "axios": "^0.18.0",
     "core-js": "^3.0.1",
+    "fast-xml-parser": "^3.12.16",
     "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.11.0",
+    "koa-static": "^5.0.0",
     "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "sequelize": "^5.7.6",
+    "sqlite3": "^4.0.6",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

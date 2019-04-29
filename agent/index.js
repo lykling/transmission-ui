@@ -4,19 +4,23 @@
  * @file agent/index.js
  * @author Pride Leong<lykling.lyk@gmail.com>
  */
-import path from 'path';
-import express from 'express';
-import filemanager from '@opuscapita/filemanager-server';
+import Koa from 'koa';
+import session from 'koa-session';
+import routes from './routes';
 
-const app = express();
+const app = new Koa();
 
-const config = {
-    fsRoot: './',
-    rootName: '/',
-};
-app.use('/api/fs', filemanager.middleware(config));
-app.use('/', express.static(path.resolve(__dirname, '../sense')));
+app.keys = ['transmission-ui'];
+app.use(session({
+    key: 'tr:sess',
+    maxAge: 8640000,
+    autoCommit: true,
+    overwrite: true,
+    httpOnly: true,
+    signed: true,
+    rolling: false,
+    renew: false,
+}, app));
 
-app.listen('8004', err => {
-    // logger
-});
+app.use(routes.routes(), routes.allowedMethods());
+app.listen(8004);
