@@ -12,7 +12,7 @@ const app = new Koa();
 
 app.keys = ['transmission-ui'];
 app.use(session({
-    key: 'tr:sess',
+    key: 'trui:sess',
     maxAge: 8640000,
     autoCommit: true,
     overwrite: true,

@@ -6,10 +6,8 @@
  */
 import Router from 'koa-router';
 import bodyparser from 'koa-bodyparser';
-import * as hydra from '../../lib/hydra';
-import * as feed from '../../lib/feed';
 import _ from 'lodash';
-import {User} from '../../lib/modules';
+import * as feed from '../../lib/feed';
 
 const router = new Router();
 
@@ -37,13 +35,10 @@ router.post('/feed', async (ctx, next) => {
         const response = await _.get(feed, method, _.noop)(
             ctx.request.body.params, ctx.request.body.reqid
         );
-        ctx.body = {
-            code: 0,
-            response,
-            error: null,
-        };
+        ctx.body = response;
     }
     catch (err) {
+        console.log(err);
         ctx.status = 500;
         ctx.body = {
             code: 1,

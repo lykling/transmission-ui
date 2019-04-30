@@ -18,7 +18,7 @@ async function addXsrfToken(ctx, next) {
         timestamp: new Date(),
     };
     ctx.cookies.set(
-        'oiiam:xsrftoken',
+        'trui:xsrftoken',
         ctx.session.xsrf.token,
         {
             domain: 'iooy.cc',
