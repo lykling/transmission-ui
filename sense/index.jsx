@@ -40,12 +40,26 @@ function Index(props) {
             error: null,
         });
     }, []);
+    const [feedContent, setFeedContent] = React.useState({
+        data: null,
+        error: null,
+    });
+    async function updateFeed(feed) {
+        const data = await request(
+            '/api/feed',
+            {},
+            {method: 'update', params: {feedid: feed.feedid}, reqid: uuid()}
+        );
+        setFeedContent({
+            data: data,
+            error: null,
+        });
+    }
 
     const inputEl = React.useRef(null);
 
     async function add() {
         const url = inputEl.current.value;
-        console.log(`url: ${url}`);
         await request('/api/feed', {}, {method: 'add', params: {url}, reqid: uuid()});
     }
     return (
@@ -54,7 +68,7 @@ function Index(props) {
             ? (
                 <ul>
                     {_.map(state.data, x => (
-                        <li>
+                        <li onClick={_.partial(updateFeed, x)}>
                             {x.url}
                         </li>
                     ))}
@@ -68,6 +82,14 @@ function Index(props) {
             <button onClick={add}>
                 Add
             </button>
+            {feedContent.error == null
+            ? (
+                <pre>{JSON.stringify(feedContent.data)}</pre>
+            )
+            : (
+                <em>{feedContent.error.stack}</em>
+            )
+            }
         </div>
     );
 }
