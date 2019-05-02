@@ -8,6 +8,8 @@ import Router from 'koa-router';
 import bodyparser from 'koa-bodyparser';
 import _ from 'lodash';
 import * as feed from '../../lib/feed';
+import Transmission from '../../lib/transmission';
+import * as env from '../../lib/env';
 
 const router = new Router();
 
@@ -38,7 +40,6 @@ router.post('/feed', async (ctx, next) => {
         ctx.body = response;
     }
     catch (err) {
-        console.log(err);
         ctx.status = 500;
         ctx.body = {
             code: 1,
@@ -48,6 +49,36 @@ router.post('/feed', async (ctx, next) => {
                 message: 'Fail to call method of feed',
             },
         };
+    }
+});
+
+const transmission = new Transmission({
+    host: env.args.transmissionHost,
+    port: env.args.transmissionPort,
+    path: env.args.transmissionPath,
+    user: env.args.transmissionUser,
+    pswd: env.args.transmissionPswd,
+});
+router.post('/transmission', async (ctx, next) => {
+    try {
+        const method = ctx.request.body.method;
+        const response = await transmission.request(
+            method,
+            ctx.request.body.params,
+            ctx.request.body.reqid,
+        );
+        ctx.body = response;
+    }
+    catch (err) {
+        ctx.status = 500;
+        ctx.body = {
+            code: 1,
+            response: null,
+            error: {
+                errno: 500,
+                message: 'Fail to call method of transmission-daemon',
+            },
+        }
     }
 });
 
