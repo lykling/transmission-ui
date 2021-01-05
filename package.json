@@ -32,7 +32,7 @@
     "@opuscapita/filemanager-server": "^1.1.0-beta.6",
     "@opuscapita/react-filemanager": "^1.1.0-beta.6",
     "@opuscapita/react-filemanager-connector-node-v1": "^1.1.0-beta.6",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "core-js": "^3.0.1",
     "fast-xml-parser": "^3.12.16",
     "koa": "^2.7.0",
